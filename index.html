@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="block1">
+            <form action="" id='form1'>
+                <label for="bank">Баланс <br>
+                    <input type="text" name="bank" readonly id="bank">
+                </label> <br>
+                <label for="beerCount">Пиво <br>
+                    <input type="text" name="beerCount" readonly id="beerCount">
+                </label> <br>
+                <label for="wineCount">Вино <br>
+                    <input type="text" name="wineCount" readonly id="wineCount">
+                </label> <br>
+                <label for="pepsiCount">Пепсі <br>
+                    <input type="text" name="pepsiCount" readonly id="pepsiCount">
+                </label> <br>
+            </form>
+        </div>
+        <div class="block2">
+            <form action="" id="form2">
+                <label for="count">Кількість <br>
+                    <input type="number" name="count" id="count">
+                </label> <br>
+                <div id="radioButton">
+                    <label for="numberBeer">Пиво <br>
+                        <input type="radio" name="numberItem" value="Пиво" id="numberBeer" checked>
+                    </label>
+                    <label for="numberVine">Вино <br>
+                        <input type="radio" name="numberItem" value="Вино" id="numberVine">
+                    </label>
+                    <label for="numberPepsi">Пепсі <br>
+                        <input type="radio" name="numberItem" value="Пепсі" id="numberPepsi">
+                    </label>
+                </div>
+                <input type="button" value="Додати" id='add'>
+                <br>
+                <div id="listItems"></div>
+                <br>
+                <input type="button" value="Купити" id='sell'>
+            </form>
+        </div>
+        <div class="block3">
+            <form action="" name="form3">
+                <div id="listBalans"></div>
+            </form>
+        </div>
+        <script src="script.js"></script>
+</body>
+
+</html>

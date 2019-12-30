@@ -1,5 +1,4 @@
 let getId = id => document.getElementById(id);
-let getSel = sel => document.getElementsByClassName(sel);
 let form2 = document.forms.form2;
 
 const shop = (function () {
@@ -14,72 +13,68 @@ const shop = (function () {
     let bankWine = 0;
     let bankPepsi = 0;
     return {
-        calckBeer(countBeer) {
-                if (countBeer <= beerCount) {
-                    beerCount -= countBeer;
-                    bankBeer = countBeer * beerPrice;
-                    bank += bankBeer;
-                    return true;
-                } else {
-                    return false;
-                }
+        calckBeer(countBeerToBuy) {
+            if (countBeerToBuy <= beerCount) {
+                beerCount -= countBeerToBuy;
+                bankBeer = countBeerToBuy * beerPrice;
+                bank += bankBeer;
+                return true;
+            } else {
+                return false;
+            }
         },
-        calckWine(countWine) {
-                if (countWine <= wineCount) {
-                    wineCount -= countWine;
-                    bankWine = countWine * winePrice;
-                    bank += bankWine;
-                    return true;
-                } else {
-                    return false;
-                }
+        calckWine(countWineToBuy) {
+            if (countWineToBuy <= wineCount) {
+                wineCount -= countWineToBuy;
+                bankWine = countWineToBuy * winePrice;
+                bank += bankWine;
+                return true;
+            } else {
+                return false;
+            }
         },
-        calckPepsi(countPepsi) {
-                if (countPepsi <= pepsiCount) {
-                    pepsiCount -= countPepsi;
-                    bankPepsi = countPepsi * pepsiPrice;
-                    bank += bankPepsi;
-                    return true;
-                } else {
-                    return false;
-                }
+        calckPepsi(countPepsiToBuy) {
+            if (countPepsiToBuy <= pepsiCount) {
+                pepsiCount -= countPepsiToBuy;
+                bankPepsi = countPepsiToBuy * pepsiPrice;
+                bank += bankPepsi;
+                return true;
+            } else {
+                return false;
+            }
         },
-        getBeerCount(countBeer) {
-            if (countBeer == undefined) {
+        getBeerCount(countBeerToBuy) {
+            if (countBeerToBuy == undefined) {
                 return beerCount;
             } else {
-                return beerCount -= countBeer;
+                return beerCount -= countBeerToBuy;
             }
         },
-        getWineCount(countWine) {
-            if (countWine == undefined) {
+        getWineCount(countWineToBuy) {
+            if (countWineToBuy == undefined) {
                 return wineCount;
             } else {
-                return wineCount -= countWine;
+                return wineCount -= countWineToBuy;
             }
         },
-        getPepsiCount(countPepsi) {
-            if (countPepsi == undefined) {
+        getPepsiCount(countPepsiToBuy) {
+            if (countPepsiToBuy == undefined) {
                 return pepsiCount;
             } else {
-                return pepsiCount -= countPepsi;
+                return pepsiCount -= countPepsiToBuy;
             }
         },
-        getBank(count) {
+        getBank() {
             return bank;
         }
     }
 }());
 (function () {
     let mainList = {
-        beer: '0',
-        wine: '0',
-        pepsi: '0'
+        beer: 0,
+        wine: 0,
+        pepsi: 0
     };
-    let countBeer = mainList.beer;
-    let countWine = mainList.wine;
-    let countPepsi = mainList.pepsi;
-
     function renderData() {
         getId('beerCount').value = shop.getBeerCount();
         getId('wineCount').value = shop.getWineCount();
@@ -87,9 +82,9 @@ const shop = (function () {
         getId('bank').value = shop.getBank();
     }
     renderData();
-    let count;
     let item = form2.numberItem;
     getId('add').onclick = function () {
+        getId('listBalans').innerText ='';
         if (getId('count').value == false) {
             getId('add').style.disabled = true;
         } else {
@@ -98,35 +93,31 @@ const shop = (function () {
                 if (item[i].checked) {
                     item_value = item[i].value;
                     if (item_value == 'Пиво') {
-                        mainList.beer = getId('count').value;
-                        countBeer = mainList.beer;
-                        let status = shop.calckBeer(countBeer);
+                        mainList.beer += +getId('count').value;
+                        let status = shop.calckBeer(+getId('count').value);
                         if (!status) {
-                            alert(`Вибачте, але на складі залишилось ${getId('beerCount').value} пляшок пива `);
-                            mainList.beer = 0;
+                            alert(`Вибачте, але на складі залишилось ${ shop.getBeerCount(0)} пляшок пива `);
+                            mainList.beer -= getId('count').value;
                             getId('count').value = '';
                             return
                         }
                     }
                     if (item_value == 'Вино') {
-                        mainList.wine = getId('count').value;
-                        countWine = mainList.wine;
-                        let status = shop.calckWine(countWine);
+                        mainList.wine += +getId('count').value;
+                        let status = shop.calckWine(+getId('count').value);
                         if (!status) {
-                            alert(`Вибачте, але на складі залишилось ${getId('wineCount').value} пляшок вина `);
-                            mainList.wine = 0;
+                            alert(`Вибачте, але на складі залишилось ${shop.getWineCount(0)} пляшок вина `);
+                            mainList.wine -= getId('count').value;
                             getId('count').value = '';
                             return
                         }
-
                     }
                     if (item_value == 'Пепсі') {
-                        mainList.pepsi = getId('count').value;
-                        countPepsi = mainList.pepsi;
-                        let status = shop.calckPepsi(countPepsi);
+                        mainList.pepsi += +getId('count').value;
+                        let status = shop.calckPepsi( +getId('count').value);
                         if (!status) {
-                            alert(`Вибачте, але на складі залишилось ${getId('pepsiCount').value} пляшок пепсі `);
-                            mainList.pepsi = 0;
+                            alert(`Вибачте, але на складі залишилось ${shop.getPepsiCount(0)} пляшок пепсі `);
+                            mainList.pepsi -= getId('count').value;
                             getId('count').value = '';
                             return
                         }
@@ -134,12 +125,10 @@ const shop = (function () {
                 }
             }
             let list = '<ul>';
-            list += `<li > ${item_value} : ${getId('count').value} шт </li>`;
+            list += `<li > ${item_value} : ${+getId('count').value} шт </li>`;
             list += '</ul>';
             getId('listItems').innerHTML += list;
-            count = getId('count').value;
             getId('count').value = '';
-            console.log(mainList);
         }
     }
     getId('sell').onclick = function () {
